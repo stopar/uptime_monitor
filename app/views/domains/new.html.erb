@@ -1,0 +1,18 @@
+<h1>Add a new domain</h1>
+
+<%= form_with model: @domain do |f| %>
+  <% invalid = @domain.errors.include?(:name) %>
+  <div class="form-row align-items-center">
+    <div class="col-auto">
+      <%= f.text_field :name, class: "form-control #{'is-invalid' if invalid}", placeholder: "google.com" %>
+      <div class="invalid-feedback d-block">
+        <% @domain.errors.full_messages_for(:name).each do |error_message| %>
+          <%= error_message %>.
+        <% end %>
+      </div>
+    </div>
+    <div class="col-auto">
+      <%= f.submit "Save", class: "btn btn-primary btn-tone" %>
+    </div>
+  </div>
+<% end %>
