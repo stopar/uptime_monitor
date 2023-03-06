@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-2 p-3">
+	    <% unless domain.monitoring %>
+	      <%= button_to "Ping", domain_pings_path(domain), class: "btn btn-primary btn-tone" %>
+	    <% end %>
+	</div>
+	<div class="col">
+	</div>
+	<div class="col-2 p-3">
+	    <% if domain.monitoring %>
+	      <%= form_with model: domain, method: :put do |f| %>
+	        <%= f.hidden_field :monitor, value: false %>
+	        <%= f.submit "Stop Monitoring", class: "btn btn-secondary btn-tone" %>
+	      <% end %>
+	    <% else %>
+	      <%= form_with model: domain, method: :put do |f| %>
+	        <%= f.hidden_field :monitor, value: true %>
+	        <%= f.submit "Monitor", class: "btn btn-secondary btn-tone" %>
+	      <% end %>
+	    <% end %>
+	</div>	
+</div>

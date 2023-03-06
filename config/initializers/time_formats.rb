@@ -1,1 +1,1 @@
-Time::DATE_FORMATS[:ping_time] = "%a %b %y, %l:%M:%S %p"
+Time::DATE_FORMATS[:ping_time] = "%a, %d %b %Y, %l:%M:%S %p"

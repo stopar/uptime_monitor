@@ -1,0 +1,7 @@
+<% # All the below is no longer required as it will be triggered from models/ping.rb once the ping is craeted %>
+<% # Replace Monitoring %>
+<% # <%= turbo_stream.update "monitoring", partial: "domains/monitoring", locals: { domain: @domain} %>
+
+
+<% # Show flash message %>
+<%= turbo_stream.prepend "flash", partial: "layouts/flash" %> 

@@ -1,4 +1,5 @@
 class DomainsController < ApplicationController
+  
   def new
     @domain = Domain.new
   end
@@ -18,14 +19,20 @@ class DomainsController < ApplicationController
 
     if @domain.update_attribute(:monitoring, params[:domain][:monitor])
       MonitorJob.perform_later(@domain)
-      flash[:notice] = "Monitoring #{@domain.name}"
+      
+      if params[:domain][:monitor] == "true"
+        flash.now[:notice] = "Monitoring #{@domain.name}"
+      else
+        flash.now[:alert] = "Stopped monitoring #{(@domain.name)}"
+      end
     else
-      flash[:alert] = "Monitoring failed!"
+      flash.now[:alert] = "Monitoring failed!"
     end
   end
 
   def show
     @domain = Domain.find(params[:id])
+    @domain_pings = @domain.pings.order_last_out_first
   end
 
   private

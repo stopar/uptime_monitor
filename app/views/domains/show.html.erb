@@ -1,6 +1,15 @@
 <h1>Uptime for <%= @domain.name %></h1>
+<p>Latest uptime on top of the table</p>
 
 <%= turbo_stream_from dom_id(@domain) %>
+
+<div id="flash" class="flash">
+  <%= render "layouts/flash" %>
+</div>
+
+<div id="monitoring" class="text-center">
+	<%= render partial: "domains/monitoring", locals: { domain: @domain } %>
+</div>
 
 <table class="table table-striped table-light">
   <thead>
@@ -12,28 +21,8 @@
     </tr>
   </thead>
   <tbody id="pings">
-    <tr>
-      <td colspan="2">
-        <% if !@domain.monitoring %>
-          <%= button_to "Ping", domain_pings_path(@domain), class: "btn btn-primary btn-tone" %>
-        <% end %>
-      </td>
-      <td colspan="2" align="right">
-        <% if @domain.monitoring %>
-          <%= form_with model: @domain, method: :put do |f| %>
-            <%= f.hidden_field :monitor, value: false %>
-            <%= f.submit "Stop Monitoring", class: "btn btn-secondary btn-tone" %>
-          <% end %>
-        <% else %>
-          <%= form_with model: @domain, method: :put do |f| %>
-            <%= f.hidden_field :monitor, value: true %>
-            <%= f.submit "Monitor", class: "btn btn-secondary btn-tone" %>
-          <% end %>
-        <% end %>
-      </td>
-    </tr>
-    <% if @domain.pings.present? %>
-      <% @domain.pings.each do |ping| %>
+    <% if @domain_pings.present? %>
+      <% @domain_pings.each do |ping| %>
         <%= render partial: "pings/ping", locals: { ping: ping, domain: @domain } %>
       <% end %>
     <% end %>
